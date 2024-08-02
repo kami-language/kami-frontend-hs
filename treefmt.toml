@@ -1,0 +1,26 @@
+# One CLI to format the code tree - https://github.com/numtide/treefmt
+
+[formatter.haskell]
+command = "ormolu"
+options = [
+  "--mode", "inplace",
+  "--check-idempotence"
+]
+includes = ["*.hs"]
+
+[formatter.nix]
+command = "alejandra"
+includes = ["*.nix"]
+excludes = [
+  "nix/packages/*.nix",
+  "nix/sources.nix",
+]
+
+[formatter.shell]
+command = "shfmt"
+options = [
+    "--indent", "2",
+    "--simplify",
+    "--write",
+]
+includes = ["*.sh"]

@@ -1,0 +1,7 @@
+.ghc.environment*
+.hie
+cabal.project.local
+dist-newstyle
+nixkell.cabal
+result*
+*~
