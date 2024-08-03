@@ -67,17 +67,17 @@ argParser = between (string "(") (string ")")
 basetermParser:: Parsec String st TermVal
 basetermParser = choice
     [ string "tt" >> return TT
-    , string "\\" >> Lam <$> many1 (argParser <* spaces) <* string "->" <* spaces <*> termParser
-    , try $ between (string "(") (string ")") termParser
+    , string "\\" >> Lam <$> many1 (argParser <* spaces) <* string "->" <* spaces <*> termParser'
+    , try $ between (string "(") (string ")") termParser'
 
 
-    , string "fst" >> spaces' >> Fst <$> termParser
-    , string "snd" >> spaces' >> Snd <$> termParser
-    -- , try $ between (string "(") (string ")") (MkProd <$> termParser <* spaces <* string "," <* spaces <*> termParser)
+    , string "fst" >> spaces' >> Fst <$> basetermParser
+    , string "snd" >> spaces' >> Snd <$> basetermParser
+    -- , try $ between (string "(") (string ")") (MkProd <$> termParser' <* spaces <* string "," <* spaces <*> termParser')
 
-    , string "left" >> spaces' >> Left' <$> termParser
-    , string "right" >> spaces' >> Right' <$> termParser
-    , string "either" >> spaces' >> Either' <$> termParser <* spaces' <*> termParser <* spaces' <*> termParser
+    , string "left" >> spaces' >> Left' <$> basetermParser
+    , string "right" >> spaces' >> Right' <$> basetermParser
+    , string "either" >> spaces' >> Either' <$> basetermParser <* spaces' <*> basetermParser <* spaces' <*> basetermParser
     ]
 
 
@@ -100,35 +100,39 @@ appParser' acc' = f acc' <$> many (try (spaces' *> basetermParser))
 
 -- termParser1:: Parsec String st TermVal
 -- termParser1 = choice
---     [ string "fst" >> spaces' >> Fst <$> termParser
---     , string "snd" >> spaces' >> Snd <$> termParser
---     , string "left" >> spaces' >> Left' <$> termParser
---     , string "right" >> spaces' >> Right' <$> termParser
---     , string "either" >> spaces' >> Either' <$> termParser <* spaces' <*> termParser <* spaces' <*> termParser
+--     [ string "fst" >> spaces' >> Fst <$> termParser'
+--     , string "snd" >> spaces' >> Snd <$> termParser'
+--     , string "left" >> spaces' >> Left' <$> termParser'
+--     , string "right" >> spaces' >> Right' <$> termParser'
+--     , string "either" >> spaces' >> Either' <$> termParser' <* spaces' <*> termParser' <* spaces' <*> termParser'
 --     ]
 
-termParser:: Parsec String st TermVal
-termParser = basetermParser >>= \x -> choice
-    [ appParser' x <* (eof <|> lookAhead (void (string ")")))
-    , MkProd x <$ spaces <* string "," <* spaces <*> termParser
+termParser':: Parsec String st TermVal
+termParser' = basetermParser >>= \x -> choice
+    [ try $ MkProd x <$ spaces <* string "," <* spaces <*> termParser'
+    , try $ appParser' x
     ]
 
--- termParser:: Parsec String st TermVal
--- termParser = choice 
---     [ string "fst" >> spaces' >> Fst <$> termParser
---     , string "snd" >> spaces' >> Snd <$> termParser
---     , try $ between (string "(") (string ")") (MkProd <$> termParser <* spaces <* string "," <* spaces <*> termParser)
 
---     , string "left" >> spaces' >> Left' <$> termParser
---     , string "right" >> spaces' >> Right' <$> termParser
---     , string "either" >> spaces' >> Either' <$> termParser <* spaces' <*> termParser <* spaces' <*> termParser
+termParser:: Parsec String st TermVal
+termParser =  termParser' <* eof
+
+-- termParser':: Parsec String st TermVal
+-- termParser' = choice 
+--     [ string "fst" >> spaces' >> Fst <$> termParser'
+--     , string "snd" >> spaces' >> Snd <$> termParser'
+--     , try $ between (string "(") (string ")") (MkProd <$> termParser' <* spaces <* string "," <* spaces <*> termParser')
+
+--     , string "left" >> spaces' >> Left' <$> termParser'
+--     , string "right" >> spaces' >> Right' <$> termParser'
+--     , string "either" >> spaces' >> Either' <$> termParser' <* spaces' <*> termParser' <* spaces' <*> termParser'
 
 --     , appParser
 --     ]
 
 statementParser :: Parsec String st Statement
 statementParser = TypeDef <$> nameParser <* spaces <* string ":"  <* spaces <*> typeParser
-    <|> TermDef <$> nameParser <* spaces <* string "="  <* spaces <*> termParser
+    <|> TermDef <$> nameParser <* spaces <* string "="  <* spaces <*> termParser'
 
 
     -- Fun <$> typeParser <* spaces <* string "->" <* spaces <*> typeParser

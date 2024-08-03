@@ -46,6 +46,8 @@ spec = do
                 (App (Fst TT) (MkProd (Snd TT) TT))
             test termParser "(tt , (fst tt) (snd tt , tt))" `shouldBe` Right
                 (MkProd TT (App (Fst TT) (MkProd (Snd TT) TT)))
+            test termParser "tt , tt , tt" `shouldBe` Right
+                (MkProd TT (MkProd TT TT))
 
 
     describe "statementParser" $ do
