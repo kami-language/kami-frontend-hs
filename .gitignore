@@ -5,3 +5,4 @@ dist-newstyle
 nixkell.cabal
 result*
 *~
+.direnv/

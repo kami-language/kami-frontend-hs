@@ -16,6 +16,7 @@ dependencies:
   - transformers
   - unordered-containers
   - vector
+  - parsec
 
 library:
   source-dirs: src
@@ -44,6 +45,7 @@ tests:
       - kami-frontend-hs
 
 default-extensions:
+  - GADTs
   - BangPatterns
   - BinaryLiterals
   - ConstraintKinds
