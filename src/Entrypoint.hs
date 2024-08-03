@@ -57,7 +57,6 @@ typeParser =
      [ string "->" >> spaces >> typeParser >>= \y -> return (Fun x y)
      , string "," >> spaces >> typeParser >>= \y -> return (Prod x y)
      , return x
-    --  , lookAhead (string ")") >> return x
      ]
 
 argParser :: Parsec String st FunArg
@@ -73,7 +72,6 @@ basetermParser = choice
 
     , string "fst" >> spaces' >> Fst <$> basetermParser
     , string "snd" >> spaces' >> Snd <$> basetermParser
-    -- , try $ between (string "(") (string ")") (MkProd <$> termParser' <* spaces <* string "," <* spaces <*> termParser')
 
     , string "left" >> spaces' >> Left' <$> basetermParser
     , string "right" >> spaces' >> Right' <$> basetermParser
@@ -81,31 +79,12 @@ basetermParser = choice
     ]
 
 
-appParser:: Parsec String st TermVal
--- appParser = g <$> basetermParser `sepBy` spaces'
-appParser = f <$> basetermParser <*> many (try (spaces' *> basetermParser))
-    where
-        -- g [] = undefined
-        -- g (x : xs) = f x xs
-
-        f acc [] = acc
-        f acc (x : xs) = f (App acc x) xs
-
 appParser':: TermVal -> Parsec String st TermVal
 appParser' acc' = f acc' <$> many (try (spaces' *> basetermParser))
     where
         f acc [] = acc
         f acc (x : xs) = f (App acc x) xs
 
-
--- termParser1:: Parsec String st TermVal
--- termParser1 = choice
---     [ string "fst" >> spaces' >> Fst <$> termParser'
---     , string "snd" >> spaces' >> Snd <$> termParser'
---     , string "left" >> spaces' >> Left' <$> termParser'
---     , string "right" >> spaces' >> Right' <$> termParser'
---     , string "either" >> spaces' >> Either' <$> termParser' <* spaces' <*> termParser' <* spaces' <*> termParser'
---     ]
 
 termParser':: Parsec String st TermVal
 termParser' = basetermParser >>= \x -> choice
@@ -117,18 +96,6 @@ termParser' = basetermParser >>= \x -> choice
 termParser:: Parsec String st TermVal
 termParser =  termParser' <* eof
 
--- termParser':: Parsec String st TermVal
--- termParser' = choice 
---     [ string "fst" >> spaces' >> Fst <$> termParser'
---     , string "snd" >> spaces' >> Snd <$> termParser'
---     , try $ between (string "(") (string ")") (MkProd <$> termParser' <* spaces <* string "," <* spaces <*> termParser')
-
---     , string "left" >> spaces' >> Left' <$> termParser'
---     , string "right" >> spaces' >> Right' <$> termParser'
---     , string "either" >> spaces' >> Either' <$> termParser' <* spaces' <*> termParser' <* spaces' <*> termParser'
-
---     , appParser
---     ]
 
 statementParser :: Parsec String st Statement
 statementParser = TypeDef <$> nameParser <* spaces <* string ":"  <* spaces <*> typeParser

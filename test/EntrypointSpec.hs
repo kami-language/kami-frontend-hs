@@ -48,6 +48,14 @@ spec = do
                 (MkProd TT (App (Fst TT) (MkProd (Snd TT) TT)))
             test termParser "tt , tt , tt" `shouldBe` Right
                 (MkProd TT (MkProd TT TT))
+            test termParser "fst tt tt" `shouldBe` Right
+                (App (Fst TT) TT)
+
+        it "can parse sum terms" $ do
+            test termParser "left tt" `shouldBe` Right (Left' TT)
+            test termParser "right tt" `shouldBe` Right (Right' TT)
+            test termParser "either (left tt) tt tt" `shouldBe` Right (Either' (Left' TT) TT TT)
+
 
 
     describe "statementParser" $ do
