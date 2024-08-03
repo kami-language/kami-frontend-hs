@@ -56,6 +56,9 @@ spec = do
             test termParser "right tt" `shouldBe` Right (Right' TT)
             test termParser "either (left tt) tt tt" `shouldBe` Right (Either' (Left' TT) TT TT)
 
+        it "can parse variables" $ do
+            test termParser "\\(a : Unit) (b : Unit) -> a , b" `shouldBe` Right
+                (Lam [FunArg (Name "a") Unit , FunArg (Name "b") Unit] (MkProd (Var (Name "a")) (Var (Name "b"))))
 
 
     describe "statementParser" $ do

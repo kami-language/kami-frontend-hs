@@ -16,7 +16,7 @@ data Modality = At | Box
 data TypeVal = Fun TypeVal TypeVal | Prod TypeVal TypeVal | Modal Modality TypeVal | Sum TypeVal TypeVal | List TypeVal | Unit
     deriving stock (Eq, Show)
 data TermVal =
-    Var String
+    Var Name
     | Lam [FunArg] TermVal | App TermVal TermVal
     | Fst TermVal | Snd TermVal | MkProd TermVal TermVal
     | Left' TermVal | Right' TermVal | Either' TermVal TermVal TermVal
@@ -57,6 +57,7 @@ typeParser =
      [ string "->" >> spaces >> typeParser >>= \y -> return (Fun x y)
      , string "," >> spaces >> typeParser >>= \y -> return (Prod x y)
      , return x
+    --  , lookAhead (string ")") >> return x
      ]
 
 argParser :: Parsec String st FunArg
@@ -69,13 +70,14 @@ basetermParser = choice
     , string "\\" >> Lam <$> many1 (argParser <* spaces) <* string "->" <* spaces <*> termParser'
     , try $ between (string "(") (string ")") termParser'
 
-
     , string "fst" >> spaces' >> Fst <$> basetermParser
     , string "snd" >> spaces' >> Snd <$> basetermParser
 
     , string "left" >> spaces' >> Left' <$> basetermParser
     , string "right" >> spaces' >> Right' <$> basetermParser
     , string "either" >> spaces' >> Either' <$> basetermParser <* spaces' <*> basetermParser <* spaces' <*> basetermParser
+    
+    , Var <$> nameParser
     ]
 
 
