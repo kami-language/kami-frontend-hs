@@ -28,8 +28,8 @@ spec = do
             test termParser "tt" `shouldBe` Right TT
 
         it "can parse lambdas" $ do
-            test termParser "\\(f : Unit -> Unit) -> tt" `shouldBe` Right (Lam [FunArg (Name "f") (Fun Unit Unit)] TT)
-            test termParser "\\(f : Unit -> Unit) (a : Unit) -> tt" `shouldBe` Right (Lam [FunArg (Name "f") (Fun Unit Unit), FunArg (Name "a") Unit] TT)
+            test termParser "\\(f : Unit -> Unit) -> tt" `shouldBe` Right (mkLam [FunArg (Name "f") (Fun Unit Unit)] TT)
+            test termParser "\\(f : Unit -> Unit) (a : Unit) -> tt" `shouldBe` Right (mkLam [FunArg (Name "f") (Fun Unit Unit), FunArg (Name "a") Unit] TT)
 
         it "can parse function applications" $ do
             test termParser "tt tt" `shouldBe` Right (App TT TT)
@@ -58,11 +58,20 @@ spec = do
 
         it "can parse variables" $ do
             test termParser "\\(a : Unit) (b : Unit) -> a , b" `shouldBe` Right
-                (Lam [FunArg (Name "a") Unit , FunArg (Name "b") Unit] (MkProd (Var (Name "a")) (Var (Name "b"))))
+                (mkLam [FunArg (Name "a") Unit , FunArg (Name "b") Unit] (MkProd (Var (Name "a")) (Var (Name "b"))))
 
 
     describe "statementParser" $ do
         it "can parse typedefs" $ do
             test statementParser "hello : Unit -> Unit" `shouldBe`
                 Right (TypeDef (Name "hello") (Fun Unit Unit))
+
+        it "can parse termdefs" $ do
+            test statementsParser "id a = a" `shouldBe`
+                Right [TermDef (Name "id") [Name "a"] (Var (Name "a"))]
+
+    describe "statementsParser" $ do
+        it "can parse id" $ do
+            test statementsParser "id : Unit -> Unit\nid a = a" `shouldBe`
+                Right [TypeDef (Name "id") (Fun Unit Unit), TermDef (Name "id") [Name "a"] (Var (Name "a"))]
 

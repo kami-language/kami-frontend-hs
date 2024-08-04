@@ -66,6 +66,7 @@ library
     , directory
     , either
     , filepath
+    , filtrable
     , mtl
     , parsec
     , random
@@ -131,6 +132,7 @@ executable kami-frontend-hs
     , directory
     , either
     , filepath
+    , filtrable
     , kami-frontend-hs
     , mtl
     , parsec
@@ -146,6 +148,7 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      EntrypointSpec
       Paths_kami_frontend_hs
   hs-source-dirs:
       test
@@ -198,6 +201,7 @@ test-suite spec
     , directory
     , either
     , filepath
+    , filtrable
     , hspec
     , kami-frontend-hs
     , mtl

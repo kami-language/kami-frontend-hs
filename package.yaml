@@ -17,6 +17,7 @@ dependencies:
   - unordered-containers
   - vector
   - parsec
+  - filtrable
 
 library:
   source-dirs: src
