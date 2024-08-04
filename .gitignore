@@ -6,3 +6,4 @@ nixkell.cabal
 result*
 *~
 .direnv/
+src/MAlonzo/

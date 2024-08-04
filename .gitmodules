@@ -1,0 +1,3 @@
+[submodule "kami"]
+	path = kami
+	url = git@github.com:kami-language/kami.git
