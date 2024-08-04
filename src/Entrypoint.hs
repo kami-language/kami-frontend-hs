@@ -9,9 +9,14 @@ type Toplevel = [Statement]
 data Statement =
     TypeDef Name TypeVal
     | TermDef Name [Name] TermVal
+    | EmptyLine
+    | Comment String
     deriving stock (Eq, Show)
 
-data Modality = At | Box
+data Location = L0 | L1 | L2
+    deriving stock (Eq, Show)
+
+data Modality = At Location | Box
     deriving stock (Eq, Show)
 
 data TypeVal = Fun TypeVal TypeVal | Prod TypeVal TypeVal | Modal Modality TypeVal | Sum TypeVal TypeVal | List TypeVal | Unit
@@ -22,7 +27,7 @@ data TermVal =
     | LetIn FunArg TermVal TermVal
     | Fst TermVal | Snd TermVal | MkProd TermVal TermVal
     | Left' TermVal | Right' TermVal | Either' TermVal TermVal TermVal
-    | Nil | Cons | ListRec
+    | Nil | Cons TermVal TermVal | ListRec TermVal TermVal TermVal
     | TT
     | Check TermVal TypeVal
     deriving stock (Eq, Show)
@@ -33,7 +38,7 @@ data TermVal =
 -- data TypeList = TNil | TCons 
 
 newtype Name = Name {getName :: String}
-    deriving newtype (Eq, Show)
+    deriving stock (Eq, Show)
 
 data FunArg = FunArg Name TypeVal
     deriving stock (Eq, Show)
@@ -52,13 +57,23 @@ nameParser = Name <$> many1 alphaNum
 
 basetypeParser:: Parsec String st TypeVal
 basetypeParser = string "Unit" *> return Unit
+    <|> string "List" *> white' *> (List <$> basetypeParser)
     <|> between (string "(") (string ")") typeParser
+    <|> between (string "{") (string "}") (Modal Box <$> typeParser)
+
+locationParser :: Parsec String st Location
+locationParser = choice
+    [ string "0" >> return L0
+    , string "1" >> return L1
+    , string "2" >> return L2
+    ]
 
 typeParser:: Parsec String st TypeVal
 typeParser =
     basetypeParser <* white >>= \x -> choice
      [ string "->" >> white >> typeParser >>= \y -> return (Fun x y)
      , string "," >> white >> typeParser >>= \y -> return (Prod x y)
+     , string "@" >> white >> locationParser >>= \y -> return (Modal (At y) x)
      , return x
     --  , lookAhead (string ")") >> return x
      ]
@@ -80,8 +95,12 @@ basetermParser = choice
     , string "snd" >> white' >> Snd <$> basetermParser
 
     , string "left" >> white' >> Left' <$> basetermParser
-    , string "right" >> white' >> Right' <$> basetermParser
+    , try $ string "right" >> white' >> Right' <$> basetermParser
     , string "either" >> white' >> Either' <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
+
+    , string "nil" >> return Nil
+    , string "cons" >> white' >> Cons <$> basetermParser <* white' <*> basetermParser
+    , string "rec-List" >> white' >> ListRec <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
 
     , Var <$> nameParser
     ]
@@ -107,8 +126,10 @@ termParser =  termParser' <* eof
 
 statementParser :: Parsec String st Statement
 statementParser = choice
-    [ try $ TypeDef <$> nameParser <* white <* string ":"  <* white <*> typeParser
+    [ Comment <$> string "//" <* many (noneOf "\n")
+    , try $ TypeDef <$> nameParser <* white <* string ":"  <* white <*> typeParser
     , TermDef <$> nameParser <* white' <*> many (nameParser <* white') <* string "="  <* white' <*> termParser'
+    , lookAhead endOfLine *> return EmptyLine
     ]
 
 statementsParser :: Parsec String st [Statement]
@@ -122,14 +143,18 @@ statementsIntoTerm statements = do
 
     -- split term and type definitions
     let fType (TypeDef name d) = Just (name , d)
-        fType (TermDef _ _ _) = Nothing
+        fType (TermDef {}) = Nothing
+        fType (Comment _ ) = Nothing
+        fType EmptyLine = Nothing
     let fTerm (TermDef name args d) = Just (name , args , d)
         fTerm (TypeDef _ _) = Nothing
+        fTerm (Comment _ ) = Nothing
+        fTerm EmptyLine = Nothing
     let terms = mapMaybe fTerm statements
     let types = mapMaybe fType statements
 
     -- apply type to the arguments of a term
-    let applyType [] ty t = Right $ Check t ty
+    let applyType [] ty t = Right t -- Check t ty
         applyType (x : xs) (Fun a b) t = do
             t' <- applyType xs b t
             return (Lam (FunArg x a) t')

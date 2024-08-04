@@ -23,6 +23,10 @@ spec = do
             test typeParser "Unit -> Unit , Unit" `shouldBe` Right (Fun Unit (Prod Unit Unit))
             test typeParser "(Unit -> Unit) , Unit" `shouldBe` Right (Prod (Fun Unit Unit) Unit)
 
+        it "can parse types with modalities" $ do
+            test typeParser "(List Unit @ 0) -> {List (Unit @ 0)} @ 0" `shouldBe`
+                Right (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit)))))
+
     describe "termParser" $ do
         it "can parse tt" $ do
             test termParser "tt" `shouldBe` Right TT
@@ -74,4 +78,21 @@ spec = do
         it "can parse id" $ do
             test statementsParser "id : Unit -> Unit\nid a = a" `shouldBe`
                 Right [TypeDef (Name "id") (Fun Unit Unit), TermDef (Name "id") [Name "a"] (Var (Name "a"))]
+
+    describe "full file parser" $ do
+        it "can parse id" $ do
+            content <- readFile "test/examples/id.kami"
+            (either (Left . show) (statementsIntoTerm) (test statementsParser content)) `shouldBe` 
+                Right (Check (Lam (FunArg (Name "a") (Modal (At L0) Unit)) (Var (Name "a")))
+                 (Fun (Modal (At L0) Unit) (Modal (At L0) Unit)))
+
+        it "can parse globalize-list" $ do
+            content <- readFile "test/examples/globalize-list.kami"
+            (either (Left . show) (statementsIntoTerm) (test statementsParser content)) `shouldBe` 
+                Right (Check (Lam (FunArg (Name {getName = "xs"}) (Modal (At L0) (List Unit))) (ListRec (Var (Name {getName = "xs"})) Nil (Lam (FunArg (Name {getName = "x"}) Unit) (Lam (FunArg (Name {getName = "xs"}) (List (Modal (At L0) Unit))) (Cons (Var (Name {getName = "x"})) (Var (Name {getName = "xs"}))))))) (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit))))))
+
+                -- Right (Check (Lam (FunArg (Name "xs") (Modal (At L0) (List Unit))) (ListRec (Var (Name "xs")) (Var "Nil") (Lam (FunArg "x" Unit) (Lam (FunArg "xs" (List (Modal (At L0) Unit))) (App (App (Var "Cons") (Var "x")) (Var "xs")))))) (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit)))))) 
+                
+
+
 

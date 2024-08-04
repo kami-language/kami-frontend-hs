@@ -1,0 +1,19 @@
+// globalize'-Lst : Γ ⊢' ⟮ Lst A ＠ ⦗ i ⦘ ∣ id' ⟯⇒ ◻ (Lst (A ＠ ⦗ i ⦘)) ＠ ⦗ i ⦘
+//    globalize'-Lst = Λ letmod (var (suc! zero) id₂)
+//                       and mod _ (rec-Lst ((var (suc! zero) id₂))
+//                                 (mod _ [])
+//                                 (letmod (var (suc! zero) id₂)
+//                                 and mod _ (mod _ (var (suc! (suc! (suc (suc zero)))) (stage ⦗ i ⦘)) ∷ var (suc! zero) id₂)
+//                                 ))
+//
+//    globalize-Lst : Γ ⊢' ⟮ Lst A ＠ ⦗ i ⦘ ∣ id' ⟯⇒ Tr (Lst (A ＠ ⦗ i ⦘))
+//    globalize-Lst = Λ (eval' ∘' (globalize'-Lst ∘' var zero id₂))
+
+gl0 : (List Unit @ 0) -> {List (Unit @ 0)} @ 0
+gl0 xs = rec-List xs nil (\(x : Unit) (xs : List (Unit @ 0)) -> cons x xs)
+
+// -- in pattern matching notation
+// gl' [] = []
+// gl' (x :: xs) = &x :: xs
+// gl : List A @ 0 -> List (A @ 0)
+// gl xs = x
