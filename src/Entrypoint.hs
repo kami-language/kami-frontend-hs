@@ -130,6 +130,7 @@ statementParser = choice
     , try $ TypeDef <$> nameParser <* white <* string ":"  <* white <*> typeParser
     , TermDef <$> nameParser <* white' <*> many (nameParser <* white') <* string "="  <* white' <*> termParser'
     , lookAhead endOfLine *> return EmptyLine
+    , lookAhead eof *> return EmptyLine
     ]
 
 statementsParser :: Parsec String st [Statement]
