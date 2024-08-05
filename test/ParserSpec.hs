@@ -1,6 +1,6 @@
-module EntrypointSpec where
+module ParserSpec where
 
-import Entrypoint
+import Parser.Definition
 import Test.Hspec -- (describe , Spec)
 
 import Text.Parsec ( parse )

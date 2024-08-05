@@ -212,6 +212,7 @@ library
       MAlonzo.Code.Function.Structures.Biased
       MAlonzo.Code.Induction
       MAlonzo.Code.Induction.WellFounded
+      MAlonzo.Code.KamiCore.FFI.Parser.Definition
       MAlonzo.Code.KamiCore.Pipeline.Main
       MAlonzo.Code.Level
       MAlonzo.Code.Relation.Binary
@@ -261,6 +262,7 @@ library
       MAlonzo.Code.Relation.Unary.Properties
       MAlonzo.RTE
       MAlonzo.RTE.Float
+      Parser.Definition
   other-modules:
       Paths_kami_frontend_hs
   hs-source-dirs:
@@ -396,7 +398,7 @@ test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      EntrypointSpec
+      ParserSpec
       TypecheckSpec
       Paths_kami_frontend_hs
   hs-source-dirs:
