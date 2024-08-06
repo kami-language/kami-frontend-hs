@@ -2,7 +2,7 @@
 module TypecheckSpec where
 
 import Test.Hspec -- (describe , Spec)
-import MAlonzo.Code.KamiCore.Pipeline.Main ( sayhello , isLambda )
+import MAlonzo.Code.KamiCore.Pipeline.Main ( sayhello , isLambda , approximateTypecheck )
 import Parser.Definition
 
 
@@ -12,6 +12,6 @@ spec = do
         it "is integrated" $ do
             sayhello "bla" `shouldBe` "hello, bla"
         it "can accept terms" $ do
-            isLambda (Lam (FunArg (Name "bla") Unit) TT) `shouldBe` "Lambda!"
+            approximateTypecheck (Lam (FunArg (Name "bla") Unit) (App (Var (Name "bla")) TT)) `shouldBe` "done"
 
 

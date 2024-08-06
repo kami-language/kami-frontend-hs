@@ -104,3 +104,6 @@ ghc-options:
   - -Wno-implicit-prelude
   - -Wno-missing-kind-signatures
   - -Wno-unused-matches
+  - -Wno-unused-imports
+  - -Wno-name-shadowing
+  - -Wno-missing-signatures

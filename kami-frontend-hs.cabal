@@ -30,6 +30,27 @@ library
       MAlonzo.Code.Agda.Builtin.Unit
       MAlonzo.Code.Agda.Builtin.Word
       MAlonzo.Code.Agda.Primitive
+      MAlonzo.Code.Agora.Category.Std.Category.Construction.Id
+      MAlonzo.Code.Agora.Category.Std.Category.Construction.Product
+      MAlonzo.Code.Agora.Category.Std.Category.Definition
+      MAlonzo.Code.Agora.Category.Std.Category.Instance.CategoryLike
+      MAlonzo.Code.Agora.Category.Std.Category.Notation.Associativity
+      MAlonzo.Code.Agora.Category.Std.Category.Structured.Classified.Definition
+      MAlonzo.Code.Agora.Category.Std.Functor.Constant
+      MAlonzo.Code.Agora.Category.Std.Functor.Definition
+      MAlonzo.Code.Agora.Category.Std.Functor.Faithful
+      MAlonzo.Code.Agora.Category.Std.Functor.Full
+      MAlonzo.Code.Agora.Category.Std.Functor.Instance.Category
+      MAlonzo.Code.Agora.Category.Std.Limit.Specific.Product
+      MAlonzo.Code.Agora.Category.Std.Limit.Specific.Product.Definition
+      MAlonzo.Code.Agora.Category.Std.Limit.Specific.Product.Variant.Binary
+      MAlonzo.Code.Agora.Category.Std.Limit.Specific.Product.Variant.Indexed
+      MAlonzo.Code.Agora.Category.Std.Morphism.Iso
+      MAlonzo.Code.Agora.Category.Std.Morphism.Iso.Definition
+      MAlonzo.Code.Agora.Category.Std.Morphism.Iso.Property
+      MAlonzo.Code.Agora.Category.Std.Natural.Definition
+      MAlonzo.Code.Agora.Category.Std.Natural.Instance.Setoid
+      MAlonzo.Code.Agora.Category.Std.Q2Category.Definition
       MAlonzo.Code.Agora.Conventions
       MAlonzo.Code.Agora.Conventions.Meta
       MAlonzo.Code.Agora.Conventions.Meta.Structure
@@ -87,14 +108,39 @@ library
       MAlonzo.Code.Agora.Conventions.Proprelude.Equality.Strict
       MAlonzo.Code.Agora.Conventions.Proprelude.Imports
       MAlonzo.Code.Agora.Conventions.Proprelude.Init
+      MAlonzo.Code.Agora.Data.Fin.Definition
+      MAlonzo.Code.Agora.Data.Lift.Definition
+      MAlonzo.Code.Agora.Data.List.Definition
+      MAlonzo.Code.Agora.Data.Normal.Definition
+      MAlonzo.Code.Agora.Data.Normal.Instance.DecidableEquality
+      MAlonzo.Code.Agora.Data.Normal.Instance.Lattice
+      MAlonzo.Code.Agora.Data.Normal.Instance.Preorder
+      MAlonzo.Code.Agora.Data.Normal.Instance.Setoid
+      MAlonzo.Code.Agora.Data.Product.Definition
+      MAlonzo.Code.Agora.Data.Prop.Definition
+      MAlonzo.Code.Agora.Data.Sum.Definition
+      MAlonzo.Code.Agora.Data.Universe.Definition
+      MAlonzo.Code.Agora.Order.Lattice
+      MAlonzo.Code.Agora.Order.Preorder
+      MAlonzo.Code.Agora.Setoid.Definition
+      MAlonzo.Code.Agora.Setoid.Morphism
+      MAlonzo.Code.Agora.Setoid.Morphism.Injective
+      MAlonzo.Code.Agora.Setoid.Morphism.Surjective
+      MAlonzo.Code.Agora.System.Marshall.Data.DecidableEquality
+      MAlonzo.Code.Agora.TypeTheory.ParamSTT.Definition
+      MAlonzo.Code.Agora.TypeTheory.ParamSTT.Instance.Category
+      MAlonzo.Code.Agora.TypeTheory.STT.Definition
       MAlonzo.Code.Algebra
       MAlonzo.Code.Algebra.Bundles
       MAlonzo.Code.Algebra.Bundles.Raw
       MAlonzo.Code.Algebra.Consequences.Base
       MAlonzo.Code.Algebra.Consequences.Propositional
       MAlonzo.Code.Algebra.Consequences.Setoid
+      MAlonzo.Code.Algebra.Construct.LiftedChoice
       MAlonzo.Code.Algebra.Construct.NaturalChoice.Base
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.Max
       MAlonzo.Code.Algebra.Construct.NaturalChoice.MaxOp
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.Min
       MAlonzo.Code.Algebra.Construct.NaturalChoice.MinMaxOp
       MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp
       MAlonzo.Code.Algebra.Core
@@ -136,18 +182,39 @@ library
       MAlonzo.Code.Data.Empty
       MAlonzo.Code.Data.Empty.Irrelevant
       MAlonzo.Code.Data.Empty.Polymorphic
+      MAlonzo.Code.Data.Fin
       MAlonzo.Code.Data.Fin.Base
       MAlonzo.Code.Data.Fin.Patterns
       MAlonzo.Code.Data.Fin.Properties
       MAlonzo.Code.Data.Irrelevant
       MAlonzo.Code.Data.List
       MAlonzo.Code.Data.List.Base
+      MAlonzo.Code.Data.List.Effectful
+      MAlonzo.Code.Data.List.Extrema
+      MAlonzo.Code.Data.List.Extrema.Core
       MAlonzo.Code.Data.List.Membership.Propositional
+      MAlonzo.Code.Data.List.Membership.Propositional.Properties
+      MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core
       MAlonzo.Code.Data.List.Membership.Setoid
+      MAlonzo.Code.Data.List.Membership.Setoid.Properties
       MAlonzo.Code.Data.List.Properties
+      MAlonzo.Code.Data.List.Relation.Binary.Equality.Propositional
+      MAlonzo.Code.Data.List.Relation.Binary.Equality.Setoid
+      MAlonzo.Code.Data.List.Relation.Binary.Pointwise
+      MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base
+      MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties
+      MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional
+      MAlonzo.Code.Data.List.Relation.Binary.Subset.Setoid
       MAlonzo.Code.Data.List.Relation.Unary.All
+      MAlonzo.Code.Data.List.Relation.Unary.All.Properties
+      MAlonzo.Code.Data.List.Relation.Unary.AllPairs
+      MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core
       MAlonzo.Code.Data.List.Relation.Unary.Any
+      MAlonzo.Code.Data.List.Relation.Unary.Any.Properties
+      MAlonzo.Code.Data.List.Relation.Unary.Unique.Setoid
       MAlonzo.Code.Data.Maybe.Base
+      MAlonzo.Code.Data.Maybe.Relation.Unary.All
+      MAlonzo.Code.Data.Maybe.Relation.Unary.Any
       MAlonzo.Code.Data.Nat
       MAlonzo.Code.Data.Nat.Base
       MAlonzo.Code.Data.Nat.Divisibility
@@ -162,12 +229,19 @@ library
       MAlonzo.Code.Data.Product
       MAlonzo.Code.Data.Product.Algebra
       MAlonzo.Code.Data.Product.Base
+      MAlonzo.Code.Data.Product.Function.Dependent.Propositional
+      MAlonzo.Code.Data.Product.Function.NonDependent.Propositional
+      MAlonzo.Code.Data.Product.Function.NonDependent.Setoid
       MAlonzo.Code.Data.Product.Properties
+      MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent
       MAlonzo.Code.Data.Product.Relation.Unary.All
       MAlonzo.Code.Data.Sign.Base
       MAlonzo.Code.Data.Sum.Algebra
       MAlonzo.Code.Data.Sum.Base
+      MAlonzo.Code.Data.Sum.Function.Propositional
+      MAlonzo.Code.Data.Sum.Function.Setoid
       MAlonzo.Code.Data.Sum.Properties
+      MAlonzo.Code.Data.Sum.Relation.Binary.Pointwise
       MAlonzo.Code.Data.These.Base
       MAlonzo.Code.Data.Unit
       MAlonzo.Code.Data.Unit.Base
@@ -175,7 +249,9 @@ library
       MAlonzo.Code.Data.Unit.Polymorphic.Base
       MAlonzo.Code.Data.Unit.Polymorphic.Properties
       MAlonzo.Code.Data.Unit.Properties
+      MAlonzo.Code.Data.Vec
       MAlonzo.Code.Data.Vec.Base
+      MAlonzo.Code.Data.Vec.Bounded.Base
       MAlonzo.Code.Data.Vec.Functional
       MAlonzo.Code.Data.Vec.NZ45Zary
       MAlonzo.Code.Effect.Applicative
@@ -205,22 +281,72 @@ library
       MAlonzo.Code.Function.Metric.Nat.Definitions
       MAlonzo.Code.Function.Metric.Nat.Structures
       MAlonzo.Code.Function.Metric.Structures
+      MAlonzo.Code.Function.Properties.Bijection
       MAlonzo.Code.Function.Properties.Inverse
+      MAlonzo.Code.Function.Properties.Inverse.HalfAdjointEquivalence
       MAlonzo.Code.Function.Properties.RightInverse
+      MAlonzo.Code.Function.Properties.Surjection
+      MAlonzo.Code.Function.Related.Propositional
+      MAlonzo.Code.Function.Related.TypeIsomorphisms
       MAlonzo.Code.Function.Strict
       MAlonzo.Code.Function.Structures
       MAlonzo.Code.Function.Structures.Biased
       MAlonzo.Code.Induction
       MAlonzo.Code.Induction.WellFounded
       MAlonzo.Code.KamiCore.FFI.Parser.Definition
+      MAlonzo.Code.KamiCore.Foreign.Parser.Definition
+      MAlonzo.Code.KamiCore.Language.ChorMTT.Definition
+      MAlonzo.Code.KamiCore.Language.ChorMTT.Properties
+      MAlonzo.Code.KamiCore.Language.ChorMTT.Translation
+      MAlonzo.Code.KamiCore.Language.ChorProc.Definition
+      MAlonzo.Code.KamiCore.Language.ChorProc.Properties
+      MAlonzo.Code.KamiCore.Language.ChorProc.Properties2
+      MAlonzo.Code.KamiCore.Language.ChorProc.Properties3
+      MAlonzo.Code.KamiCore.Language.ChorProc.Translation
+      MAlonzo.Code.KamiCore.Language.ChorProc.TranslationCtx
+      MAlonzo.Code.KamiCore.Language.ChorProc.TranslationVar
+      MAlonzo.Code.KamiCore.Language.Kami.Raw
+      MAlonzo.Code.KamiCore.Language.MinMTT.Definition
+      MAlonzo.Code.KamiCore.Language.MinMTT.Properties
+      MAlonzo.Code.KamiCore.Language.MinMTT.Translation
+      MAlonzo.Code.KamiCore.Language.MTT.Definition
+      MAlonzo.Code.KamiCore.Language.MTT.Properties
+      MAlonzo.Code.KamiCore.Language.StdProc.Definition
+      MAlonzo.Code.KamiCore.Language.StdProc.Translation
+      MAlonzo.Code.KamiCore.Pipeline.Definition
       MAlonzo.Code.KamiCore.Pipeline.Main
+      MAlonzo.Code.KamiTheory.Basics
+      MAlonzo.Code.KamiTheory.Data.List.Definition
+      MAlonzo.Code.KamiTheory.Data.Open.Definition
+      MAlonzo.Code.KamiTheory.Data.UniqueSortedList.Definition
+      MAlonzo.Code.KamiTheory.Data.UniqueSortedList.Instance.Preorder
+      MAlonzo.Code.KamiTheory.Data.UniqueSortedList.NonEmpty
+      MAlonzo.Code.KamiTheory.Data.UniqueSortedList.Properties
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Modality
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.ModeSystem.Definition
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.ModeSystem.Example3
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.ModeSystem.Instance.Q2Category
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Commutation
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Decidability
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Definition
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Example
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Linear
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Cell.Rewriting
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Graph.Definition
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Graph.Example
+      MAlonzo.Code.KamiTheory.Main.Generic.ModeSystem.Q2Graph.Example3
+      MAlonzo.Code.KamiTheory.Order.StrictOrder.Base
+      MAlonzo.Code.KamiTheory.Order.StrictOrder.Instances.List
+      MAlonzo.Code.KamiTheory.Order.StrictOrder.Instances.UniqueSortedList
       MAlonzo.Code.Level
       MAlonzo.Code.Relation.Binary
       MAlonzo.Code.Relation.Binary.Bundles
       MAlonzo.Code.Relation.Binary.Consequences
       MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd
+      MAlonzo.Code.Relation.Binary.Construct.Intersection
       MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left
       MAlonzo.Code.Relation.Binary.Construct.NonStrictToStrict
+      MAlonzo.Code.Relation.Binary.Construct.On
       MAlonzo.Code.Relation.Binary.Core
       MAlonzo.Code.Relation.Binary.Definitions
       MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous
@@ -235,6 +361,7 @@ library
       MAlonzo.Code.Relation.Binary.Lattice.Structures
       MAlonzo.Code.Relation.Binary.Morphism.Definitions
       MAlonzo.Code.Relation.Binary.Morphism.Structures
+      MAlonzo.Code.Relation.Binary.Properties.DecTotalOrder
       MAlonzo.Code.Relation.Binary.Properties.Poset
       MAlonzo.Code.Relation.Binary.Properties.Preorder
       MAlonzo.Code.Relation.Binary.Properties.Setoid
@@ -255,6 +382,7 @@ library
       MAlonzo.Code.Relation.Nullary
       MAlonzo.Code.Relation.Nullary.Decidable
       MAlonzo.Code.Relation.Nullary.Decidable.Core
+      MAlonzo.Code.Relation.Nullary.Indexed
       MAlonzo.Code.Relation.Nullary.Negation
       MAlonzo.Code.Relation.Nullary.Negation.Core
       MAlonzo.Code.Relation.Nullary.Reflects
@@ -307,7 +435,7 @@ library
       TypeApplications
       TypeOperators
       ViewPatterns
-  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches
+  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches -Wno-unused-imports -Wno-name-shadowing -Wno-missing-signatures
   build-depends:
       aeson
     , base >=4.7 && <5
@@ -373,7 +501,7 @@ executable kami-frontend-hs
       TypeApplications
       TypeOperators
       ViewPatterns
-  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches -Wno-unused-imports -Wno-name-shadowing -Wno-missing-signatures -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
@@ -443,7 +571,7 @@ test-suite spec
       TypeApplications
       TypeOperators
       ViewPatterns
-  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Weverything -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-missing-export-lists -Wno-missing-home-modules -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unused-packages -Wno-implicit-prelude -Wno-missing-kind-signatures -Wno-unused-matches -Wno-unused-imports -Wno-name-shadowing -Wno-missing-signatures -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
