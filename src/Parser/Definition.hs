@@ -81,6 +81,7 @@ typeParser =
     basetypeParser <* white >>= \x -> choice
      [ string "->" >> white >> typeParser >>= \y -> return (Fun x y)
      , string "," >> white >> typeParser >>= \y -> return (Prod x y)
+     , string "+" >> white >> typeParser >>= \y -> return (Sum x y)
      , string "@" >> white >> locationParser >>= \y -> return (Modal (At y) x)
      , return x
     --  , lookAhead (string ")") >> return x
@@ -97,20 +98,20 @@ mkLam xs t = foldr Lam t xs
 
 basetermParser:: Parsec String st TermVal
 basetermParser = choice
-    [ string "tt" >> return TT
-    , string "\\" >> mkLam <$> many1 (argParser <* white) <* string "->" <* white <*> termParser'
+    [ string "\\" >> mkLam <$> many1 (argParser <* white) <* string "->" <* white <*> termParser'
+    , try $ string "tt" >> return TT
     , try $ between (string "(") (string ")") termParser'
 
-    , string "fst" >> white' >> Fst <$> basetermParser
-    , string "snd" >> white' >> Snd <$> basetermParser
+    , try $ string "fst" >> white' >> Fst <$> basetermParser
+    , try $ string "snd" >> white' >> Snd <$> basetermParser
 
-    , string "left" >> white' >> Left' <$> basetermParser
+    , try $ string "left" >> white' >> Left' <$> basetermParser
     , try $ string "right" >> white' >> Right' <$> basetermParser
-    , string "either" >> white' >> Either' <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
+    , try $ string "either" >> white' >> Either' <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
 
-    , string "nil" >> return Nil
-    , string "cons" >> white' >> Cons <$> basetermParser <* white' <*> basetermParser
-    , string "rec-List" >> white' >> ListRec <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
+    , try $ string "nil" >> return Nil
+    , try $ string "cons" >> white' >> Cons <$> basetermParser <* white' <*> basetermParser
+    , try $ string "rec-List" >> white' >> ListRec <$> basetermParser <* white' <*> basetermParser <* white' <*> basetermParser
 
     , Var <$> nameParser
     ]

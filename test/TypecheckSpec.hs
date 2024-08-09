@@ -22,4 +22,14 @@ spec = do
             (either (Left . show) (fmap approximateTypecheck . statementsIntoTerm) (test statementsParser content)) `shouldBe` 
                 Right "done"
 
+        it "can check example file (globalize-sum)" $ do
+            content <- readFile "test/examples/globalize-sum.kami"
+            (either (Left . show) (fmap approximateTypecheck . statementsIntoTerm) (test statementsParser content)) `shouldBe` 
+                Right "done"
+
+        it "can check example file (globalize-List)" $ do
+            content <- readFile "test/examples/globalize-list.kami"
+            (either (Left . show) (fmap approximateTypecheck . statementsIntoTerm) (test statementsParser content)) `shouldBe` 
+                Right "done"
+
 
