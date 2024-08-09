@@ -293,7 +293,6 @@ library
       MAlonzo.Code.Function.Structures.Biased
       MAlonzo.Code.Induction
       MAlonzo.Code.Induction.WellFounded
-      MAlonzo.Code.KamiCore.FFI.Parser.Definition
       MAlonzo.Code.KamiCore.Foreign.Parser.Definition
       MAlonzo.Code.KamiCore.Language.ChorMTT.Definition
       MAlonzo.Code.KamiCore.Language.ChorMTT.Properties

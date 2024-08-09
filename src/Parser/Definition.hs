@@ -19,7 +19,7 @@ data Modality = At Location | Box
 data TypeVal = Fun TypeVal TypeVal | Prod TypeVal TypeVal | Modal Modality TypeVal | Sum TypeVal TypeVal | List TypeVal | Unit
     deriving stock (Eq, Show)
 
-data FunArg = FunArg Name TypeVal
+data FunArg = TypeFunArg Name TypeVal | NameFunArg Name
     deriving stock (Eq, Show)
 
 data TermVal =
@@ -87,8 +87,10 @@ typeParser =
      ]
 
 argParser :: Parsec String st FunArg
-argParser = between (string "(") (string ")")
-    (FunArg <$> nameParser <* white <* string ":" <* white <*> typeParser)
+argParser =  choice
+    [ between (string "(") (string ")") (TypeFunArg <$> nameParser <* white <* string ":" <* white <*> typeParser)
+    , NameFunArg <$> nameParser
+    ]
 
 mkLam ::  [FunArg] -> TermVal -> TermVal
 mkLam xs t = foldr Lam t xs
@@ -166,7 +168,7 @@ statementsIntoTerm statements = do
     let applyType [] ty t = Right t -- Check t ty
         applyType (x : xs) (Fun a b) t = do
             t' <- applyType xs b t
-            return (Lam (FunArg x a) t')
+            return (Lam (TypeFunArg x a) t')
         applyType (_ : _) ty _ = Left $ "Expected the type " <> show ty <> " to be a function type"
 
     -- find type for every term and turn function definition into lambdas
@@ -184,7 +186,7 @@ statementsIntoTerm statements = do
 
     -- we only have to combine all of them into a large let-in
     let intoLetIn [(_, val, ty)] = Check val ty
-        intoLetIn ((name, val, ty):xs) = LetIn (FunArg name ty) val (intoLetIn xs)
+        intoLetIn ((name, val, ty):xs) = LetIn (TypeFunArg name ty) val (intoLetIn xs)
         intoLetIn [] = TT
 
     return $ intoLetIn terms'

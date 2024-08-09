@@ -32,8 +32,8 @@ spec = do
             test termParser "tt" `shouldBe` Right TT
 
         it "can parse lambdas" $ do
-            test termParser "\\(f : Unit -> Unit) -> tt" `shouldBe` Right (mkLam [FunArg (Name "f") (Fun Unit Unit)] TT)
-            test termParser "\\(f : Unit -> Unit) (a : Unit) -> tt" `shouldBe` Right (mkLam [FunArg (Name "f") (Fun Unit Unit), FunArg (Name "a") Unit] TT)
+            test termParser "\\(f : Unit -> Unit) -> tt" `shouldBe` Right (mkLam [TypeFunArg (Name "f") (Fun Unit Unit)] TT)
+            test termParser "\\(f : Unit -> Unit) (a : Unit) -> tt" `shouldBe` Right (mkLam [TypeFunArg (Name "f") (Fun Unit Unit), TypeFunArg (Name "a") Unit] TT)
 
         it "can parse function applications" $ do
             test termParser "tt tt" `shouldBe` Right (App TT TT)
@@ -62,7 +62,7 @@ spec = do
 
         it "can parse variables" $ do
             test termParser "\\(a : Unit) (b : Unit) -> a , b" `shouldBe` Right
-                (mkLam [FunArg (Name "a") Unit , FunArg (Name "b") Unit] (MkProd (Var (Name "a")) (Var (Name "b"))))
+                (mkLam [TypeFunArg (Name "a") Unit , TypeFunArg (Name "b") Unit] (MkProd (Var (Name "a")) (Var (Name "b"))))
 
 
     describe "statementParser" $ do
@@ -83,13 +83,13 @@ spec = do
         it "can parse id" $ do
             content <- readFile "test/examples/id.kami"
             (either (Left . show) (statementsIntoTerm) (test statementsParser content)) `shouldBe` 
-                Right (Check (Lam (FunArg (Name "a") (Modal (At L0) Unit)) (Var (Name "a")))
+                Right (Check (Lam (TypeFunArg (Name "a") (Modal (At L0) Unit)) (Var (Name "a")))
                  (Fun (Modal (At L0) Unit) (Modal (At L0) Unit)))
 
         it "can parse globalize-list" $ do
             content <- readFile "test/examples/globalize-list.kami"
             (either (Left . show) (statementsIntoTerm) (test statementsParser content)) `shouldBe` 
-                Right (Check (Lam (FunArg (Name {getName = "xs"}) (Modal (At L0) (List Unit))) (ListRec (Var (Name {getName = "xs"})) Nil (Lam (FunArg (Name {getName = "x"}) Unit) (Lam (FunArg (Name {getName = "xs"}) (List (Modal (At L0) Unit))) (Cons (Var (Name {getName = "x"})) (Var (Name {getName = "xs"}))))))) (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit))))))
+                Right (Check (Lam (TypeFunArg (Name {getName = "xs"}) (Modal (At L0) (List Unit))) (ListRec (Var (Name {getName = "xs"})) Nil (Lam (TypeFunArg (Name {getName = "x"}) Unit) (Lam (TypeFunArg (Name {getName = "xs"}) (List (Modal (At L0) Unit))) (Cons (Var (Name {getName = "x"})) (Var (Name {getName = "xs"}))))))) (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit))))))
 
                 -- Right (Check (Lam (FunArg (Name "xs") (Modal (At L0) (List Unit))) (ListRec (Var (Name "xs")) (Var "Nil") (Lam (FunArg "x" Unit) (Lam (FunArg "xs" (List (Modal (At L0) Unit))) (App (App (Var "Cons") (Var "x")) (Var "xs")))))) (Fun (Modal (At L0) (List Unit)) (Modal (At L0) (Modal Box (List (Modal (At L0) Unit)))))) 
                 
