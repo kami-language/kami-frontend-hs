@@ -83,7 +83,7 @@ spec = do
         it "can parse id" $ do
             content <- readFile "test/examples/id.kami"
             (either (Left . show) (statementsIntoTerm) (test statementsParser content)) `shouldBe` 
-                Right (Check (Lam (TypeFunArg (Name "a") (Modal (At L0) Unit)) (Var (Name "a")))
+                Right (Check (Lam (TypeFunArg (Name "a") (Modal (At L0) Unit)) (Mod (At L0) (Var (Name "a"))))
                  (Fun (Modal (At L0) Unit) (Modal (At L0) Unit)))
 
         it "can parse globalize-list" $ do

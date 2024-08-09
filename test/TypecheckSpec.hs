@@ -15,7 +15,7 @@ spec = do
         it "is integrated" $ do
             sayhello "bla" `shouldBe` "hello, bla"
         it "can check app terms" $ do
-            approximateTypecheck (Lam (TypeFunArg (Name "bla") Unit) (App (Var (Name "bla")) TT)) `shouldBe` "Expected function type on left side of application"
+            approximateTypecheck (Lam (TypeFunArg (Name "bla") Unit) (App (Var (Name "bla")) TT)) `shouldBe` "Expected function type, but got: Unit"
 
         it "can check example file (id)" $ do
             content <- readFile "test/examples/id.kami"

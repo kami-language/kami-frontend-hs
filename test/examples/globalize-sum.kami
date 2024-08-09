@@ -1,8 +1,14 @@
+
 gl0 : ((Unit + Unit) @ 0) -> {(Unit @ 0) + (Unit @ 0)} @ 0
-gl0 xs = either xs (\x -> left x^) (\x -> right x^) 
+gl0 xs = either xs (\x -> {left (x @ 0)}) (\x -> {right (x @ 0)}) @ 0
 
+aa : Unit
+aa = tt
 
-gl0 (xs @ 0) = either xs (\x -> {left (x @ 0)}) g @ 0
+gl : ((Unit + Unit) @ 0) -> ((Unit @ 0) + (Unit @ 0))
+gl x = (\(y : {(Unit @ 0) + (Unit @ 0)} @ 0) -> y) (gl0 x)
 
-gl0 (left x @ 0) = {left (x @ 0)} @ 0
-gl0 (right x @ 0) = {right (x @ 0)} @ 0
+// gl0 x
+// gl0 (xs @ 0) = either xs (\x -> {left (x @ 0)}) g @ 0
+// gl0 (left xleft @ 0) = {left (x @ 0)} @ 0
+// gl0 (right x @ 0) = {right (x @ 0)} @ 0

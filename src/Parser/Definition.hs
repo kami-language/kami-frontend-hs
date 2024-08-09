@@ -26,6 +26,7 @@ data TermVal =
     Var Name
     | Lam FunArg TermVal | App TermVal TermVal
     | LetIn FunArg TermVal TermVal
+    | Mod Modality TermVal
     | Fst TermVal | Snd TermVal | MkProd TermVal TermVal
     | Left' TermVal | Right' TermVal | Either' TermVal TermVal TermVal
     | Nil | Cons TermVal TermVal | ListRec TermVal TermVal TermVal
@@ -101,6 +102,7 @@ basetermParser = choice
     [ string "\\" >> mkLam <$> many1 (argParser <* white) <* string "->" <* white <*> termParser'
     , try $ string "tt" >> return TT
     , try $ between (string "(") (string ")") termParser'
+    , try $ between (string "{") (string "}") (Mod Box <$> termParser') -- mod for box modality
 
     , try $ string "fst" >> white' >> Fst <$> basetermParser
     , try $ string "snd" >> white' >> Snd <$> basetermParser
@@ -127,6 +129,7 @@ appParser' acc' = f acc' <$> many (try (white' *> basetermParser))
 termParser':: Parsec String st TermVal
 termParser' = basetermParser >>= \x -> choice
     [ try $ MkProd x <$ white <* string "," <* white <*> termParser'
+    , try $ (flip Mod x . At) <$ white <* string "@" <* white <*> locationParser -- mod for at modality
     , try $ appParser' x
     ]
 

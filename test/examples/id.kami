@@ -2,4 +2,4 @@
 // This is the identity function
 
 id : (Unit @ 0) -> (Unit @ 0)
-id a = a
+id a = a @ 0
