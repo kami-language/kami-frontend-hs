@@ -6,8 +6,10 @@ aa : Unit
 aa = tt
 
 gl : ((Unit + Unit) @ 0) -> ((Unit @ 0) + (Unit @ 0))
-gl x = (\(y : {(Unit @ 0) + (Unit @ 0)} @ 0) -> y) (gl0 x)
+gl x = let y = gl0 x
+       in y
 
+// (\(y : {(Unit @ 0) + (Unit @ 0)} @ 0) -> y) (gl0 x)
 // gl0 x
 // gl0 (xs @ 0) = either xs (\x -> {left (x @ 0)}) g @ 0
 // gl0 (left xleft @ 0) = {left (x @ 0)} @ 0

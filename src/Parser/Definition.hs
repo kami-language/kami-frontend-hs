@@ -103,6 +103,7 @@ basetermParser = choice
     , try $ string "tt" >> return TT
     , try $ between (string "(") (string ")") termParser'
     , try $ between (string "{") (string "}") (Mod Box <$> termParser') -- mod for box modality
+    , try $ string "let" >> white' >> LetIn <$> argParser <* white' <* string "=" <* white' <*> termParser' <* spaces <* string "in" <* white' <*> termParser'
 
     , try $ string "fst" >> white' >> Fst <$> basetermParser
     , try $ string "snd" >> white' >> Snd <$> basetermParser
